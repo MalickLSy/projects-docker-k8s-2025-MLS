@@ -6,6 +6,9 @@ const port= process.env.PORT;
 
 app.use(express.json());
 
+app.get('/mls', (req,res)=> {
+    res.status(200).send('up !');
+});
 
 console.log('Connecting to DB ');
 mongoose.connect(`mongodb://mongodb/${process.env.KEY_VALUE_DB}`, {
