@@ -2,18 +2,11 @@ MONGODB_IMAGE="mongodb/mongodb-community-server"
 MONGODB_TAG="7.0.21-ubuntu2204"
 source .env.db
 
-PORT=3000
 
 #Root credentials 
 ROOT_USER="root-user"
 ROOT_PASSWORD="root-password"
 
-
-#key-value credentiels
-
-KEY_VALUE_DB="key-value-db"
-KEY_VALUE_USER="key-value-user"
-KEY_VALUE_PASSWORD="key-value-password"
 
 # Connectivity
 source .env.network

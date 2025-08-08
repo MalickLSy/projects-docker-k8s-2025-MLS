@@ -2,16 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const port= 3000;
+const port= process.env.PORT;
 
 app.use(express.json());
 
 
 console.log('Connecting to DB ');
-mongoose.connect('mongodb://mongodb/key-value-db', {
+mongoose.connect(`mongodb://mongodb/${process.env.KEY_VALUE_DB}`, {
     auth:{
-        username: 'key-value-user',
-        password: 'key-value-password'
+        username: process.env.KEY_VALUE_USER,
+        password: process.env.KEY_VALUE_PASSWORD
     },
     connectTimeoutMS : 500
 })
