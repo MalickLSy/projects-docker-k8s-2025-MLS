@@ -12,7 +12,7 @@ else
     else
         echo "Failed to kill container $DB_CONTAINER_NAME."
     fi
-fi
+fi      
 
 # Volume
 if [ -z "$(docker volume ls -q -f name=^${VOLUME_NAME}$)" ]; then
