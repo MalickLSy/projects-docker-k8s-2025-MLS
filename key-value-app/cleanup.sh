@@ -2,7 +2,7 @@ source .env.db
 source .env.volume
 source .env.network
 
-# Container
+# mongodb Container
 if [ -z "$(docker ps -aq -f name=^${DB_CONTAINER_NAME}$)" ]; then
     echo "A container with the name $DB_CONTAINER_NAME does not exist."
 else
@@ -12,7 +12,20 @@ else
     else
         echo "Failed to kill container $DB_CONTAINER_NAME."
     fi
-fi      
+fi  
+
+# Node container 
+if [ -z "$(docker ps -aq -f name=^${BACKEND_CONTAINER_NAME}$)" ]; then
+    echo "A container with the name $BACKEND_CONTAINER_NAME does not exist."
+else
+    #2>/dev/null	Cache les messages d'erreur Docker (optionnel)
+    if docker kill "$BACKEND_CONTAINER_NAME"; then
+        echo "A container with the name $BACKEND_CONTAINER_NAME has been killed."
+    else
+        echo "Failed to kill container $BACKEND_CONTAINER_NAME."
+    fi
+fi  
+
 
 # Volume
 if [ -z "$(docker volume ls -q -f name=^${VOLUME_NAME}$)" ]; then

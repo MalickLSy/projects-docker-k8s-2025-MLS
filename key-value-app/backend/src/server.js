@@ -1,31 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { keyValueRouter } = require('./routes/store');
+const { healthRouter } = require('./routes/health');
 
 const app = express();
-const port= process.env.PORT;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/mls', (req,res)=> {
-    res.status(200).send('up !');
-});
+app.use('/health', healthRouter);
+app.use('/store', keyValueRouter);
 
-console.log('Connecting to DB ');
+console.log('Connecting to DB...');
 mongoose.connect(`mongodb://mongodb/${process.env.KEY_VALUE_DB}`, {
-    auth:{
-        username: process.env.KEY_VALUE_USER,
-        password: process.env.KEY_VALUE_PASSWORD
-    },
-    connectTimeoutMS : 500
+    user: process.env.KEY_VALUE_USER,
+    pass: process.env.KEY_VALUE_PASSWORD,
+    authSource: process.env.KEY_VALUE_DB, 
+    connectTimeoutMS: 5000
 })
-.then(()=> { 
-    app.listen(port , ()=>{
-        console.log(`Server Listening on port ${port}`);
+.then(() => { 
+    console.log('Connected to DB');
+    app.listen(port, () => {
+        console.log(`Server listening on port ${port}`);
     });
-    console.log('Connected to DB ');
-  })
+})
 .catch(err => {
-    console.log('ERROR DETECTED');
-    console.error(err);
+    console.error('ERROR DETECTED:', err);
 });
-
