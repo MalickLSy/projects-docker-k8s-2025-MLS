@@ -2,11 +2,11 @@ source .env.db
 
 # Connectivity
 source .env.network
-LOCALHOST_PORT=3000
-CONTAINER_PORT=3000
+LOCALHOST_PORT=3099
+CONTAINER_PORT=3099
 
-BACKEND_IMAGE_NAME=key-value-backend 
-BACKEND_CONTAINER_NAME=backend
+
+
 
 MONGODB_HOST=mongodb
 
