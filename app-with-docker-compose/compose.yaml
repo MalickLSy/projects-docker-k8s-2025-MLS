@@ -1,4 +1,20 @@
 services:
+  backend:
+    build:
+      context: back-end
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    env_file:
+      - .env.db-key-value
+    environment:
+      - PORT=3000
+      - MONGODB_HOST=db
+    depends_on:
+      - db
+    networks:
+      - key-value-net
+
   db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
     ports:
