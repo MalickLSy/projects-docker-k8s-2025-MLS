@@ -14,7 +14,11 @@ services:
       - db
     networks:
       - key-value-net
-
+    develop:
+      watch:
+        - action: sync
+          path: ./back-end/src
+          target: /app/src
   db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
     ports:
