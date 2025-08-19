@@ -22,7 +22,7 @@ mongoose.connect(`mongodb://mongodbsy/${process.env.KEY_VALUE_DB}`, {
     connectTimeoutMS: 500
 })
 .then(() => { 
-    console.log('Connected to DB');
+    console.log('Connected to DB!   !');
     app.listen(port, () => {
         console.log(`Server listening on port ${port}`);
     });
