@@ -13,7 +13,7 @@ app.get('/', (req,res)=>{
 mongoose.connect(process.env.DB_URL).then(()=>{
   console.log('Connect to MongoDB ! Starting server.')
   app.listen(port, ()=>{
-    console.log(`Server listening on port ${port}`);
+    console.log(`Notebooks Server listening on port ${port}`);
 });  
 }).catch(err =>{
     console.error('Something went wront');
