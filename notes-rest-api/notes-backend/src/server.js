@@ -6,8 +6,8 @@ const port= process.env.PORT;
 
 app.use(express.json());
 
-app.get('/', (req, res)=>{
-    res.json({message : 'hello from notes-backend !!'});
+app.get('/api/notes', (req, res)=>{
+    res.json({message : 'hello from notes-backend !'});
 });
 
 mongoose.connect(process.env.DB_URL).then(()=>{

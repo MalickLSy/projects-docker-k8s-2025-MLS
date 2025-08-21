@@ -11,7 +11,7 @@ FROM  node:22-alpine AS prod-dependencies
 
 WORKDIR /app
 COPY package*.json .
-RUN npm ci  --only=production
+RUN npm ci  --omit=dev
 
 FROM gcr.io/distroless/nodejs22 AS production
 WORKDIR /app

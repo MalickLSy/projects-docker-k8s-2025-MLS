@@ -1,7 +1,7 @@
 name: notesbooks-backend
 
 services:
-  notesbooks:
+  notebooks:
     build:
       context: .
       target: development
@@ -16,27 +16,27 @@ services:
           action: sync
           target: /app/src
     networks:
-      - notesbooks-net
+      - notebooks-net
     depends_on:
-      - notesbooks-db
-  notesbooks-db:
+      - notebooks-db
+  notebooks-db:
     image: mongodb/mongodb-community-server:7.0-ubuntu2204
     env_file:
       - .env
     volumes:
       - type: volume
-        source: notesbooks-data
+        source: notebooks-data
         target: /data/db
       - type: bind
         source: ./db-config/mongo-init.js
         target: /docker-entrypoint-initdb.d/mongo-init.js
         read_only: true
     networks:
-      - notesbooks-net
+      - notebooks-net
 
 
 volumes:
-  notesbooks-data:
+  notebooks-data:
 
 networks:
-  notesbooks-net:
+  notebooks-net:

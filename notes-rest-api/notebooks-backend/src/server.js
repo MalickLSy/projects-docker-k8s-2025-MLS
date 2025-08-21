@@ -6,7 +6,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 
-app.get('/', (req,res)=>{
+app.get('/api/notebooks', (req,res)=>{
    res.json({message :'Hello from notebooks !'}); 
 });
 
