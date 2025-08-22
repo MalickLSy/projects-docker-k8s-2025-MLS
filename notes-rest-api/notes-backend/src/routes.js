@@ -1,9 +1,10 @@
 const express = require('express');
+const {mongoose} = require('mongoose');
+const axios = require('axios');
 const { Note } = require('./models');
-const { default: mongoose } = require('mongoose');
 
 const noteRouter = express.Router();
-
+const notebooksApiUrl = process.env.NOTEBOOKS_API_URL;
 
 const validateId = (req, res, next) => {
        
@@ -17,13 +18,38 @@ const validateId = (req, res, next) => {
 // CREATE
 noteRouter.post('/', async (req, res) => {
   try {
-    const { title, content } = req.body;
-
+    const { title, content, notebookId } = req.body;
+    
     if (!title || !content) {
-      return res.status(400).json({ error: "'title', 'content'  fields is required." });
+      return res.status(400).json({ error: "'title' and 'content' fields are required." });
     }
 
-    const note= new Note({ title, content });
+    let validatedNotebookId = null;
+
+    if (notebookId) {
+      if (!mongoose.Types.ObjectId.isValid(notebookId)) {
+        return res.status(400).json({ error: 'Invalid Notebook ID', notebookId });
+      }
+
+      try {
+        await axios.get(`${notebooksApiUrl}/${notebookId}`);
+        validatedNotebookId = notebookId; 
+      } catch (err) {
+        const jsonError = err.toJSON();
+        if (jsonError.status === 404) {
+          return res.status(404).json({ error: 'Notebook not found', notebookId });
+        } else {
+          console.error({
+            message: 'Error verifying the notebook ID. Upstream notebooks service',
+            notebookId,
+            error: err.message,
+          });
+          return res.status(500).json({ error: 'Upstream notebooks service error' });
+        }
+      }
+    }
+
+    const note = new Note({ title, content, notebookId: validatedNotebookId });
     await note.save();
     res.status(201).json({ data: note });
 
@@ -31,6 +57,7 @@ noteRouter.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // GET all
 noteRouter.get('/', async (req, res) => {
