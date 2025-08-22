@@ -1,6 +1,6 @@
 include:
-  - path: notebooks-backend/compose.yaml
-  - path: notes-backend/compose.yaml
+  - notebooks-backend/compose.yaml
+  - notes-backend/compose.yaml
 
 services:
   reverse-proxy:

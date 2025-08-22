@@ -1,17 +1,15 @@
 const express = require('express');
 const mongoose= require('mongoose');
+const { notebookRouter } = require('./routes');
 
 const app = express();
-const port = process.env.PORT;
-
 app.use(express.json());
 
-app.get('/api/notebooks', (req,res)=>{
-   res.json({message :'Hello from notebooks !'}); 
-});
+app.use('/api/notebooks',notebookRouter);
 
+const port = process.env.PORT;
 mongoose.connect(process.env.DB_URL).then(()=>{
-  console.log('Connect to MongoDB ! Starting server.')
+  console.log('Connect to MongoDB ! Starting server.');
   app.listen(port, ()=>{
     console.log(`Notebooks Server listening on port ${port}`);
 });  
