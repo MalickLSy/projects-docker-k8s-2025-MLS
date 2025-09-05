@@ -119,6 +119,7 @@ noteRouter.delete('/:id', async (req, res) => {
     }
 
     return res.status(200).json({ message: 'Note deleted successfully' });
+    
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
